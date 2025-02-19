@@ -1,7 +1,9 @@
 import 'package:firebasedemo/Widget/bottom_nav_bar.dart';
+import 'package:firebasedemo/core/locale_manager.dart';
 import 'package:firebasedemo/screens/profile_screen.dart';
 import 'package:firebasedemo/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget{
  @override
@@ -25,11 +27,24 @@ class _HomeScreenState extends State<HomeScreen>{
 
   @override
   Widget build(BuildContext context) {
+    final localManager = Provider.of<LocaleManager>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Uygulaması'),
+        title: Text(localManager.translate('title')),
       ),
-      body: _screens[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: [
+          Center(
+            child: Text(
+              localManager.translate('home'),
+              style: TextStyle(fontSize: 24),
+            ),
+          ),
+          ProfileScreen(),
+          SettingsScreen(),
+        ],
+      ),
       bottomNavigationBar: BottomNavBar(
           selectedIndex: _selectedIndex,
           onTap: _onItemTapped,

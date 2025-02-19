@@ -1,4 +1,6 @@
+import 'package:firebasedemo/core/locale_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavBar extends StatelessWidget{
   final int selectedIndex;
@@ -8,6 +10,8 @@ class BottomNavBar extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    final localManager = Provider.of<LocaleManager>(context);
+
     return BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: onTap,
