@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebasedemo/Widget/bottom_nav_bar.dart';
 import 'package:firebasedemo/core/locale_manager.dart';
+import 'package:firebasedemo/screens/CrudScreen.dart';
+import 'package:firebasedemo/screens/login_screen.dart';
 import 'package:firebasedemo/screens/profile_screen.dart';
 import 'package:firebasedemo/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +20,32 @@ class _HomeScreenState extends State<HomeScreen>{
     Center(child: Text('Ana Sayfa', style: TextStyle(fontSize: 24))),
     ProfileScreen(),
     SettingsScreen(),
+    CrudScreen(),
   ];
 
-  void _onItemTapped(int index){
-    setState(() {
-      _selectedIndex = index;
-    });
+  void _onItemTapped(int index) async{
+    if(index == 1){
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if(currentUser == null){
+        final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+        );
+        if(result == true){
+          setState(() {
+            _selectedIndex = index;
+          });
+        }
+      }else{
+        setState(() {
+          _selectedIndex = index;
+        });
+      }
+    }else{
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
@@ -43,6 +66,7 @@ class _HomeScreenState extends State<HomeScreen>{
           ),
           ProfileScreen(),
           SettingsScreen(),
+          CrudScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavBar(

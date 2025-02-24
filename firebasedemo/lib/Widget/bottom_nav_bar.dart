@@ -15,10 +15,13 @@ class BottomNavBar extends StatelessWidget{
     return BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: onTap,
-        items: const [
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        backgroundColor: Colors.white,
+        items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Ana Sayfa'
+              label: localManager.translate('home'),
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
@@ -27,6 +30,10 @@ class BottomNavBar extends StatelessWidget{
           BottomNavigationBarItem(
               icon: Icon(Icons.settings),
               label: 'Ayarlar'
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'CRUD'
           ),
         ]
     );
